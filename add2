@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Node{
+    int val;
+    Node* left;
+    Node* right;
+    Node(int x){ val = x; left = right = NULL; }
+};
+
+vector<Node*> build(int start, int end){
+    vector<Node*> trees;
+    if(start > end){
+        trees.push_back(NULL);
+        return trees;
+    }
+
+    for(int i = start; i <= end; i++){
+        vector<Node*> left = build(start, i-1);
+        vector<Node*> right = build(i+1, end);
+
+        for(Node* l : left){
+            for(Node* r : right){
+                Node* root = new Node(i);
+                root->left = l;
+                root->right = r;
+                trees.push_back(root);
+            }
+        }
+    }
+    return trees;
+}
+
+vector<Node*> generateTrees(int n){
+    if(n == 0) return {};
+    return build(1, n);
+}
+
+int main(){
+    int n = 3;
+    vector<Node*> ans = generateTrees(n);
+    cout << "Total Trees: " << ans.size();
+}
