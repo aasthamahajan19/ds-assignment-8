@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+};
+
+bool isBST(Node* root, long minVal, long maxVal){
+    if(!root) return true;
+    if(root->data <= minVal || root->data >= maxVal) return false;
+    return isBST(root->left, minVal, root->data) &&
+           isBST(root->right, root->data, maxVal);
+}
+
+int main(){
+    Node a{10,NULL,NULL}, b{5,NULL,NULL}, c{15,NULL,NULL};
+    a.left = &b; a.right = &c;
+
+    cout << (isBST(&a, LONG_MIN, LONG_MAX) ? "BST" : "Not BST");
+}
