@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+class MaxHeap{
+    int h[100], size;
+public:
+    MaxHeap(){ size = 0; }
+
+    void push(int x){
+        h[++size] = x;
+        int i = size;
+        while(i > 1 && h[i/2] < h[i]){
+            swap(h[i], h[i/2]);
+            i /= 2;
+        }
+    }
+
+    int pop(){
+        int top = h[1];
+        h[1] = h[size--];
+
+        int i = 1;
+        while(true){
+            int l = 2*i, r = 2*i+1, large = i;
+            if(l <= size && h[l] > h[large]) large = l;
+            if(r <= size && h[r] > h[large]) large = r;
+            if(large == i) break;
+            swap(h[i], h[large]);
+            i = large;
+        }
+        return top;
+    }
+};
+
+int main(){
+    MaxHeap pq;
+    pq.push(20);
+    pq.push(10);
+    pq.push(40);
+    pq.push(30);
+
+    cout << pq.pop() << endl;
+}
