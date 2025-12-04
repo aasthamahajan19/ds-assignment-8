@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x){ data = x; left = right = NULL; }
+};
+
+// -------- Convert BST to sorted array --------
+void inorder(Node* root, vector<int> &v){
+    if(!root) return;
+    inorder(root->left, v);
+    v.push_back(root->data);
+    inorder(root->right, v);
+}
+
+// -------- Build Doubly Linked List --------
+struct DLL{
+    int data;
+    DLL* prev;
+    DLL* next;
+    DLL(int x){ data = x; prev = next = NULL; }
+};
+
+DLL* buildDLL(vector<int> &v){
+    if(v.empty()) return NULL;
+
+    DLL* head = new DLL(v[0]);
+    DLL* curr = head;
+
+    for(int i = 1; i < v.size(); i++){
+        curr->next = new DLL(v[i]);
+        curr
